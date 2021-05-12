@@ -7,6 +7,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import styles from './src/styles';
 import Login from './src/login';
 import ListExpenses from './src/listExpenses';
+import Summary from './src/summary';
 
 // REF https://reactnative.dev/docs/navigation
 // REF https://blog.logrocket.com/navigating-react-native-apps-using-react-navigation/
@@ -36,6 +37,7 @@ export default function App() {
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Login">
         <Drawer.Screen name="List Expenses" component={ListExpenses} />
+        <Drawer.Screen name="Summary" component={Summary} />
         <Drawer.Screen name="Article" component={Article} />
         <Drawer.Screen name="Login" component={Login} ></Drawer.Screen>
       </Drawer.Navigator>
