@@ -11,7 +11,7 @@ export default function listExpenses() {
     // REF https://programmingwithmosh.com/react-native/make-api-calls-in-react-native-using-fetch/
     async function getExpenses(label) {
         setExpenses(null);
-        await fetch(Constants.SERVER_URL + '/' + label)
+        await fetch(Constants.SERVER_URL + label)
             .then((response) => response.json())
             .then((json) => { setExpenses(json); })
             .catch((error) => { console.log(error); });
