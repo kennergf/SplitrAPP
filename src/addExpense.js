@@ -9,27 +9,34 @@ export default function summary() {
     //const { register, handleSubmit, error } = useForm;
     const [label, onChangeLabel] = useState("Label");
     const [value, onChangeValue] = useState("");
-    const [summary, setSummary] = useState(null);
+    const [message, setMessage] = useState(null);
 
     async function addExpense(data) {
-        //setSummary(null);
-        console.log(data);
+        setMessage("Adding expense!");
+
+        // REF https://www.codota.com/code/javascript/functions/builtins/Headers/append
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", "application/json");
 
-        var requestOptions = {
+        await fetch(Constants.SERVER_URL + label + '/expense', {
             method: 'POST',
             headers: myHeaders,
             body: JSON.stringify(data),
-        };
-        await fetch(Constants.SERVER_URL + label + '/expense', requestOptions)
+        })
             .then((response) => response.text())
-            .then((json) => {
-                console.log(json);
-                //setSummary(json);
+            .then((text) => {
+                console.log(text);
+                if (text === null || text === "") {
+                    setMessage("Check the connection with the server!");
+                } else {
+                    setMessage(text);
+                }
             })
-            .catch((error) => { console.log("Error: " + error); });
+            .catch((error) => {
+                console.log("Error: " + error);
+                setMessage(error.message);
+            });
     }
 
     return (
@@ -38,7 +45,7 @@ export default function summary() {
             <TextInput style={styles.textInput} onChangeText={onChangeLabel} value={label}></TextInput>
             <TextInput style={styles.textInput} onChangeText={onChangeValue} value={value} keyboardType="numeric"></TextInput>
             <Button onPress={() => addExpense({ 'value': value })} title="Submit" />
-
+            <Text>{message}</Text>
         </View>
     );
 };
