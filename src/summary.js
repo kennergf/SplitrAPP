@@ -7,16 +7,22 @@ import styles from './styles';
 export default function summary() {
     const [text, onChangeText] = useState("Label");
     const [summary, setSummary] = useState(null);
+    const [message, setMessage] = useState(null);
 
     async function getSummary(label) {
         setSummary(null);
+        setMessage("");
+
         await fetch(Constants.SERVER_URL + label + '/summary')
             .then((response) => response.json())
             .then((json) => {
                 console.log(json);
                 setSummary(json);
             })
-            .catch((error) => { console.log(error); });
+            .catch((error) => {
+                console.log("Error: " + error);
+                setMessage(error.message);
+            });
     }
 
     return (
@@ -35,6 +41,7 @@ export default function summary() {
                     )} />
                 </View>)
             }
+            <Text>{message}</Text>
         </View>
     );
 };
