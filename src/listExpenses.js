@@ -5,7 +5,7 @@ import * as Constants from './constants';
 import styles from './styles';
 
 export default function listExpenses() {
-    const [text, onChangeText] = React.useState("Label");
+    const [text, onChangeText] = useState("Label");
     const [expenses, setExpenses] = useState([]);
 
     // REF https://programmingwithmosh.com/react-native/make-api-calls-in-react-native-using-fetch/

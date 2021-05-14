@@ -5,7 +5,7 @@ import * as Constants from './constants';
 import styles from './styles';
 
 export default function summary() {
-    const [text, onChangeText] = React.useState("Label");
+    const [text, onChangeText] = useState("Label");
     const [summary, setSummary] = useState(null);
 
     async function getSummary(label) {
