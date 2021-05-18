@@ -12,41 +12,46 @@ export default function summary() {
 
     async function addExpense(data) {
         setMessage("Adding expense!");
+
         let token = await SecureStorage.getItemAsync("JWT");
         token = token.replace("Splitr ", "");
         //console.log(token);
-        
         // REF https://www.codota.com/code/javascript/functions/builtins/Headers/append
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", JSON.parse(token));
+        var headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", JSON.parse(token));
 
         await fetch(Constants.SERVER_URL + label + '/expense', {
             method: 'POST',
-            headers: myHeaders,
+            headers: headers,
             body: JSON.stringify(data),
         })
             .then((response) => response.text())
             .then((text) => {
-                console.log(text);
-                if (text === null || text === "") {
-                    setMessage("Check the connection with the server!");
+                //console.log(text);
+                if (text.includes('error')) {
+                    let json = JSON.parse(text);
+                    setMessage("Status: " + json["status"] + " Message: " + json["error"]);
                 } else {
                     setMessage(text);
                 }
-            })
-            .catch((error) => {
+            }).catch((error) => {
                 console.log("Error: " + error);
-                setMessage(error.message);
+                setMessage("Error: " + error.message);
             });
     }
 
     return (
         <View style={styles.container}>
-            <TextInput style={styles.textInput} onChangeText={onChangeLabel} value={label}></TextInput>
-            <TextInput style={styles.textInput} onChangeText={onChangeValue} value={value} keyboardType="numeric"></TextInput>
-            <Button onPress={() => addExpense({ 'value': value })} title="Submit" />
-            <Text>{message}</Text>
+            <View style={styles.view}>
+                <Text style={styles.title}>Add Expenses</Text>
+            </View>
+            <View style={styles.content}>
+                <TextInput style={styles.textInput} onChangeText={onChangeLabel} value={label}></TextInput>
+                <TextInput style={styles.textInput} onChangeText={onChangeValue} value={value} keyboardType="numeric"></TextInput>
+                <Button onPress={() => addExpense({ 'value': value })} title="Submit" />
+                <Text style={styles.text}>{message}</Text>
+            </View>
         </View>
     );
 };

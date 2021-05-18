@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Text, View, Button, FlatList, TextInput } from 'react-native';
+import * as SecureStorage from 'expo-secure-store';
 
 import * as Constants from './constants';
 import styles from './styles';
@@ -13,40 +14,51 @@ export default function closeTrip() {
         setTripClosed("null");
         setMessage("");
 
+        let token = await SecureStorage.getItemAsync("JWT");
+        token = token.replace("Splitr ", "");
         // REF https://www.codota.com/code/javascript/functions/builtins/Headers/append
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", "application/json");
+        var headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", JSON.parse(token));
 
         await fetch(Constants.SERVER_URL + label + '/close', {
             method: 'POST',
-            headers: myHeaders,
+            headers: headers,
         })
             .then((response) => response.json())
             .then((json) => {
-                console.log(json);
-                setTripClosed(json);
+                if (json["error"] !== undefined) {
+                    setMessage("Status: " + json["status"] + " Message: " + json["error"]);
+                } else {
+                    console.log(json);
+                    setTripClosed(json);
+                }
             })
             .catch((error) => {
                 console.log("Error: " + error);
-                setMessage(error.message);
+                setMessage("Error: " + error.message);
             });
     }
 
     return (
         <View style={styles.container}>
-            <TextInput style={styles.textInput} onChangeText={onChangeText} value={text}></TextInput>
-            <Button onPress={() => closeTrip(text)} title="Close Trip" />
+            <View style={styles.view}>
+                <Text style={styles.title}>Close Trip</Text>
+            </View>
+            <View style={styles.content}>
+                <TextInput style={styles.textInput} onChangeText={onChangeText} value={text}></TextInput>
+                <Button onPress={() => closeTrip(text)} title="Close Trip" />
 
-            {tripClosed === null ?
-                <Text>No result found!</Text>
-                :
-                (<View>
-                    <Text>{tripClosed.label}</Text>
-                    <Text>{tripClosed.status}</Text>
-                </View>)
-            }
-            <Text>{message}</Text>
+                {tripClosed === null ?
+                    <Text>No result found!</Text>
+                    :
+                    (<View>
+                        <Text>{tripClosed.label}</Text>
+                        <Text>{tripClosed.status}</Text>
+                    </View>)
+                }
+                <Text style={styles.text}>{message}</Text>
+            </View>
         </View>
     );
 };
