@@ -53,8 +53,25 @@ export default function summary() {
                     <Text>No result found!</Text>
                     :
                     (<View>
-                        <Text>{summary.label}</Text>
-
+                        <Text>Label: {summary.label}</Text>
+                        <Text>Status: {summary.active.toString()}</Text>
+                        <Text>Lowest Expense: {summary.lowestExpense.toString()}</Text>
+                        <Text>Highest Expense: {summary.highestExpense.toString()}</Text>
+                        <Text>Avarage Expense: {summary.avarageExpense.toString()}</Text>
+                        <Text>Number of Purchases: {summary.numberPurchases.toString()}</Text>
+                        <Text>Total: {summary.total.toString()}</Text>
+                        <Text></Text>
+                        <Text>Value Paid per User</Text>
+                        <FlatList data={summary.paidPerUser} keyExtractor={({ id }, index) => id} renderItem={({ item }) => (
+                            <View>
+                                <Text>Username: {item.username}</Text>
+                                <Text>Value Paid: {item.value}</Text>
+                                <Text>Value to be Paid: {item.valueToBePaid}</Text>
+                                <Text>Value to be Received: {item.valueToBeReceived}</Text>
+                            </View>
+                        )} />
+                        <Text></Text>
+                        <Text>List of Expenses</Text>
                         <FlatList data={summary.expenses} keyExtractor={({ id }, index) => id} renderItem={({ item }) => (
                             <Text>{item.username + '. ' + item.value}</Text>
                         )} />
