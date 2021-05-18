@@ -1,23 +1,25 @@
 import React, { useState, setState } from 'react';
 import { Text, View, Button, FlatList, TextInput } from 'react-native';
-//import { useForm } from 'react-hook-form';
+import * as SecureStorage from 'expo-secure-store';
 
 import * as Constants from './constants';
 import styles from './styles';
 
 export default function summary() {
-    //const { register, handleSubmit, error } = useForm;
     const [label, onChangeLabel] = useState("Label");
     const [value, onChangeValue] = useState("");
     const [message, setMessage] = useState(null);
 
     async function addExpense(data) {
         setMessage("Adding expense!");
-
+        let token = await SecureStorage.getItemAsync("JWT");
+        token = token.replace("Splitr ", "");
+        //console.log(token);
+        
         // REF https://www.codota.com/code/javascript/functions/builtins/Headers/append
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", "application/json");
+        myHeaders.append("Authorization", JSON.parse(token));
 
         await fetch(Constants.SERVER_URL + label + '/expense', {
             method: 'POST',
@@ -41,7 +43,6 @@ export default function summary() {
 
     return (
         <View style={styles.container}>
-
             <TextInput style={styles.textInput} onChangeText={onChangeLabel} value={label}></TextInput>
             <TextInput style={styles.textInput} onChangeText={onChangeValue} value={value} keyboardType="numeric"></TextInput>
             <Button onPress={() => addExpense({ 'value': value })} title="Submit" />
