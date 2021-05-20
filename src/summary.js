@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, Button, FlatList, TextInput } from 'react-native';
+import { Text, View, Button, FlatList, TextInput, ScrollView } from 'react-native';
 import * as SecureStorage from 'expo-secure-store';
 
 import * as Constants from './constants';
@@ -15,7 +15,7 @@ export default function summary() {
         setMessage("");
 
         let token = await SecureStorage.getItemAsync(Constants.STORAGE_KEY);
-        if(token === null){
+        if (token === null) {
             setMessage("Please login to use the system!");
             return;
         }
@@ -57,28 +57,38 @@ export default function summary() {
                     <Text>No result found!</Text>
                     :
                     (<View>
-                        <Text>Label: {summary.label}</Text>
-                        <Text>Status: {summary.active.toString()}</Text>
-                        <Text>Lowest Expense: {summary.lowestExpense.toString()}</Text>
-                        <Text>Highest Expense: {summary.highestExpense.toString()}</Text>
-                        <Text>Avarage Expense: {summary.avarageExpense.toString()}</Text>
-                        <Text>Number of Purchases: {summary.numberPurchases.toString()}</Text>
-                        <Text>Total: {summary.total.toString()}</Text>
-                        <Text></Text>
-                        <Text>Value Paid per User</Text>
-                        <FlatList data={summary.paidPerUser} keyExtractor={({ id }, index) => id} renderItem={({ item }) => (
-                            <View>
-                                <Text>Username: {item.username}</Text>
-                                <Text>Value Paid: {item.value}</Text>
-                                <Text>Value to be Paid: {item.valueToBePaid}</Text>
-                                <Text>Value to be Received: {item.valueToBeReceived}</Text>
+                        <ScrollView keyboardShouldPersistTaps='always'>
+                            <View style={styles.listItem}>
+                                <Text>Label: {summary.label}</Text>
+                                <View style={styles.item}>
+                                    <Text>Status: {summary.active.toString()}</Text>
+                                    <Text>Lowest Expense: {summary.lowestExpense.toString()}</Text>
+                                    <Text>Highest Expense: {summary.highestExpense.toString()}</Text>
+                                    <Text>Avarage Expense: {summary.avarageExpense.toString()}</Text>
+                                    <Text>Number of Purchases: {summary.numberPurchases.toString()}</Text>
+                                    <Text>Total: {summary.total.toString()}</Text>
+                                </View>
                             </View>
-                        )} />
-                        <Text></Text>
-                        <Text>List of Expenses</Text>
-                        <FlatList data={summary.expenses} keyExtractor={({ id }, index) => id} renderItem={({ item }) => (
-                            <Text>{item.username + '. ' + item.value}</Text>
-                        )} />
+                            <View style={styles.listItem}>
+                                <Text>Value Paid per User</Text>
+                                <FlatList data={summary.paidPerUser} keyExtractor={({ id }, index) => id} renderItem={({ item }) => (
+                                    <View style={styles.item}>
+                                        <Text>Username: {item.username}</Text>
+                                        <Text>Value Paid: {item.value.toString()}</Text>
+                                        <Text>Value to be Paid: {item.valueToBePaid.toString()}</Text>
+                                        <Text>Value to be Received: {item.valueToBeReceived.toString()}</Text>
+                                    </View>
+                                )} />
+                            </View>
+                            <View style={styles.listItem}>
+                                <Text>List of Expenses</Text>
+                                <FlatList data={summary.expenses} keyExtractor={({ id }, index) => id.toString()} renderItem={({ item }) => (
+                                    <View style={styles.item}>
+                                        <Text>{item.username + '. ' + item.value.toString()}</Text>
+                                    </View>
+                                )} />
+                            </View>
+                        </ScrollView>
                     </View>)
                 }
                 <Text style={styles.text}>{message}</Text>
