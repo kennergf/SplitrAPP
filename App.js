@@ -9,6 +9,7 @@ import AddExpense from './src/addExpense';
 import ListExpenses from './src/listExpenses';
 import Summary from './src/summary';
 import CloseTrip from './src/closeTrip';
+import Signup from './src/signup';
 
 // REF https://reactnative.dev/docs/navigation
 // REF https://blog.logrocket.com/navigating-react-native-apps-using-react-navigation/
@@ -26,6 +27,7 @@ export default function App() {
         <Drawer.Screen name="Summary" component={Summary} />
         <Drawer.Screen name="Close Trip" component={CloseTrip} />
         <Drawer.Screen name="Login" component={Login} ></Drawer.Screen>
+        <Drawer.Screen name="Signup" component={Signup} ></Drawer.Screen>
       </Drawer.Navigator>
     </NavigationContainer>
   );
