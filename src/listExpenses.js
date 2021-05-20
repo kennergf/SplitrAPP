@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, Button, FlatList, TextInput } from 'react-native';
+import { Text, View, Button, FlatList, TextInput, Alert } from 'react-native';
 import * as SecureStorage from 'expo-secure-store';
 
 import * as Constants from './constants';
@@ -28,10 +28,52 @@ export default function listExpenses() {
         })
             .then((response) => response.json())
             .then((json) => {
+                console.log(json);
                 if (json["error"] !== undefined) {
                     setMessage("Status: " + json["status"] + " Message: " + json["error"]);
                 } else {
                     setExpenses(json);
+                }
+            })
+            .catch((error) => {
+                console.log("Error: " + error);
+                setMessage("Error: " + error.message);
+            });
+    }
+
+    function removeExpensePressed(label, expense) {
+        Alert.alert(
+            'Remove Expense',
+            'Are you sure you whant to remove the expense below permanently \nId: ' + expense.id + '\nUsername: ' + expense.username + '\nValue: ' + expense.value,
+            [
+                { text: 'NO' },
+                { text: 'YES', onPress: () => removeExpense(label, expense.id), style: 'cancel' }
+            ]
+        );
+    }
+
+    async function removeExpense(label, expenseId) {
+        let token = await SecureStorage.getItemAsync("JWT");
+        token = token.replace("Splitr ", "");
+        // REF https://www.codota.com/code/javascript/functions/builtins/Headers/append
+        var headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", JSON.parse(token));
+
+        await fetch(Constants.SERVER_URL + label + "/remove?expenseId=" + expenseId, {
+            method: 'DELETE',
+            headers: headers,
+        })
+            .then((response) => response.text())
+            .then((text) => {
+                console.log(text);
+                if (text.includes('error')) {
+                    let json = JSON.parse(text);
+                    setMessage("Status: " + json["status"] + " Message: " + json["error"]);
+                } else {
+                    setMessage(text);
+                    // Update the list of expenses
+                    getExpenses(label);
                 }
             })
             .catch((error) => {
@@ -51,8 +93,11 @@ export default function listExpenses() {
                 {expenses === null ?
                     <Text>No result found!</Text>
                     :
-                    (<FlatList data={expenses} keyExtractor={({ id }, index) => id} renderItem={({ item }) => (
-                        <Text>{item.username + '. ' + item.value}</Text>
+                    (<FlatList data={expenses} keyExtractor={({ id }, index) => id.toString()} renderItem={({ item }) => (
+                        <View>
+                            <Text>{item.username + '. ' + item.value.toString()}</Text>
+                            <Button onPress={() => removeExpensePressed(text, item)} title="Remove Expense"></Button>
+                        </View>
                     )} />)
                 }
                 <Text style={styles.text}>{message}</Text>
