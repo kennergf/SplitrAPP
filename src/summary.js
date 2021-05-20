@@ -14,7 +14,11 @@ export default function summary() {
         setSummary(null);
         setMessage("");
 
-        let token = await SecureStorage.getItemAsync("JWT");
+        let token = await SecureStorage.getItemAsync(Constants.STORAGE_KEY);
+        if(token === null){
+            setMessage("Please login to use the system!");
+            return;
+        }
         token = token.replace("Splitr ", "");
         // REF https://www.codota.com/code/javascript/functions/builtins/Headers/append
         var headers = new Headers();

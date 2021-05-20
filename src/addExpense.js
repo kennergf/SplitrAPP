@@ -13,7 +13,11 @@ export default function summary() {
     async function addExpense(data) {
         setMessage("Adding expense!");
 
-        let token = await SecureStorage.getItemAsync("JWT");
+        let token = await SecureStorage.getItemAsync(Constants.STORAGE_KEY);
+        if(token === null){
+            setMessage("Please login to use the system!");
+            return;
+        }
         token = token.replace("Splitr ", "");
         //console.log(token);
         // REF https://www.codota.com/code/javascript/functions/builtins/Headers/append

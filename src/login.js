@@ -34,7 +34,7 @@ export default function Login() {
                     if (token === null || token === "" || token === undefined) {
                         setMessage("Check the connection with the server!");
                     } else {
-                        SecureStorage.setItemAsync("JWT", JSON.stringify(token));
+                        SecureStorage.setItemAsync(Constants.STORAGE_KEY, JSON.stringify(token));
                         setMessage("Welcome " + data["username"]);
                     }
                 }

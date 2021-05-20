@@ -10,6 +10,7 @@ import ListExpenses from './src/listExpenses';
 import Summary from './src/summary';
 import CloseTrip from './src/closeTrip';
 import Signup from './src/signup';
+import Logout from './src/logout';
 
 // REF https://reactnative.dev/docs/navigation
 // REF https://blog.logrocket.com/navigating-react-native-apps-using-react-navigation/
@@ -28,6 +29,7 @@ export default function App() {
         <Drawer.Screen name="Close Trip" component={CloseTrip} />
         <Drawer.Screen name="Login" component={Login} ></Drawer.Screen>
         <Drawer.Screen name="Signup" component={Signup} ></Drawer.Screen>
+        <Drawer.Screen name="Logout" component={Logout} options={self.aa}></Drawer.Screen>
       </Drawer.Navigator>
     </NavigationContainer>
   );

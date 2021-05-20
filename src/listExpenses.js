@@ -15,7 +15,11 @@ export default function listExpenses() {
         setExpenses(null);
         setMessage("");
 
-        let token = await SecureStorage.getItemAsync("JWT");
+        let token = await SecureStorage.getItemAsync(Constants.STORAGE_KEY);
+        if(token === null){
+            setMessage("Please login to use the system!");
+            return;
+        }
         token = token.replace("Splitr ", "");
         // REF https://www.codota.com/code/javascript/functions/builtins/Headers/append
         var headers = new Headers();
@@ -41,6 +45,7 @@ export default function listExpenses() {
             });
     }
 
+    // REF https://medium.com/react-native-zone/english-react-native-beginner-alert-confirm-box-957a13e4157b
     function removeExpensePressed(label, expense) {
         Alert.alert(
             'Remove Expense',
@@ -53,7 +58,7 @@ export default function listExpenses() {
     }
 
     async function removeExpense(label, expenseId) {
-        let token = await SecureStorage.getItemAsync("JWT");
+        let token = await SecureStorage.getItemAsync(Constants.STORAGE_KEY);
         token = token.replace("Splitr ", "");
         // REF https://www.codota.com/code/javascript/functions/builtins/Headers/append
         var headers = new Headers();
