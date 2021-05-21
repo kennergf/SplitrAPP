@@ -64,7 +64,7 @@ export default function summary() {
                             <View style={styles.listItem}>
                                 <Text>Label: {summary.label}</Text>
                                 <View style={styles.item}>
-                                    <Text>Status: {summary.active.toString()}</Text>
+                                    <Text>Status: {summary.active ? "Active" : "Inative"}</Text>
                                     <Text>Lowest Expense: {summary.lowestExpense.toString()}</Text>
                                     <Text>Highest Expense: {summary.highestExpense.toString()}</Text>
                                     <Text>Avarage Expense: {summary.avarageExpense.toString()}</Text>
