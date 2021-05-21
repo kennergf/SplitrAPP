@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -13,6 +12,7 @@ import Signup from './src/signup';
 import Logout from './src/logout';
 import Config from './src/config';
 
+// REF ICON <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 // REF https://reactnative.dev/docs/navigation
 // REF https://blog.logrocket.com/navigating-react-native-apps-using-react-navigation/
 // REF https://reactnavigation.org/docs/drawer-navigator/
