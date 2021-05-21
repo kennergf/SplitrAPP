@@ -4,7 +4,7 @@ export default StyleSheet.create({
     container: {
         flex: 1,
         padding: 30,
-        paddingBottom: 70,
+        paddingBottom: '40%'
     },
     view: {
         flex: 1,
@@ -51,6 +51,9 @@ export default StyleSheet.create({
         alignSelf: "center",
         borderRadius: 5,
     },
+    itemText: {
+        width: '80%'
+    },
     button: {
         height: 50,
         width: '20%',
@@ -61,5 +64,5 @@ export default StyleSheet.create({
     },
     icon: {
         fontSize: 25,
-    }
+    },
 });

@@ -87,8 +87,10 @@ export default function summary() {
                                 <Text>List of Expenses</Text>
                                 <FlatList data={summary.expenses} keyExtractor={({ id }, index) => id.toString()} renderItem={({ item }) => (
                                     <View style={styles.item}>
-                                        <Text>{item.username + '. ' + item.value.toString()}</Text>
-                                    </View>
+                                        <Text>Username: {item.username}</Text>
+                                        <Text>Description: {item.description}</Text>
+                                        <Text>Value: {item.value.toString()}</Text>
+                                </View>
                                 )} />
                             </View>
                         </ScrollView>

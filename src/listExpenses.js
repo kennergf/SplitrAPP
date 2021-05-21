@@ -108,7 +108,7 @@ export default function listExpenses() {
                             <View style={styles.listItem}>
                                 <FlatList data={expenses} keyExtractor={({ id }, index) => id.toString()} renderItem={({ item }) => (
                                     <View style={styles.itemRow}>
-                                        <View style={{ width: '80%' }}>
+                                        <View style={styles.itemText}>
                                             <Text>Username: {item.username}</Text>
                                             <Text>Description: {item.description}</Text>
                                             <Text>Value: {item.value.toString()}</Text>
