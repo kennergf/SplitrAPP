@@ -25,7 +25,7 @@ export default function summary() {
         headers.append("Content-Type", "application/json");
         headers.append("Authorization", JSON.parse(token));
 
-        await fetch(Constants.SERVER_URL + label + '/expense', {
+        await fetch(Variables.SERVER_URL + label + '/expense', {
             method: 'POST',
             headers: headers,
             body: JSON.stringify(data),

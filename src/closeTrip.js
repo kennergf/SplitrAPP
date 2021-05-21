@@ -25,7 +25,7 @@ export default function closeTrip() {
         headers.append("Content-Type", "application/json");
         headers.append("Authorization", JSON.parse(token));
 
-        await fetch(Constants.SERVER_URL + label + '/close', {
+        await fetch(Variables.SERVER_URL + label + '/close', {
             method: 'POST',
             headers: headers,
         })

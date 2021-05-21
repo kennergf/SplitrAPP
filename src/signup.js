@@ -18,7 +18,7 @@ export default function Signup() {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-        await fetch(Constants.SERVER_URL + 'signup', {
+        await fetch(Variables.SERVER_URL + 'signup', {
             method: 'POST',
             headers: myHeaders,
             body: JSON.stringify(data),

@@ -18,7 +18,7 @@ export default function Login() {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-        await fetch(Constants.SERVER_URL + 'login', {
+        await fetch(Variables.SERVER_URL + 'login', {
             method: 'POST',
             headers: myHeaders,
             body: JSON.stringify(data),
