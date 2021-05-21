@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
-import { Text, View, Button, FlatList, TextInput, Alert } from 'react-native';
+import { Text, View, Button, FlatList, TextInput, Alert, ScrollView, TouchableOpacity } from 'react-native';
 import * as SecureStorage from 'expo-secure-store';
+import { MaterialIcons } from '@expo/vector-icons';
 
+import * as Variables from './variables';
 import * as Constants from './constants';
 import styles from './styles';
 
 export default function listExpenses() {
-    const [text, onChangeText] = useState("Label");
+    const [text, onChangeText] = useState("");
     const [expenses, setExpenses] = useState([]);
     const [message, setMessage] = useState(null);
 
+    // REF https://rapidapi.com/blog/how-to-make-rest-api-calls-in-react-native/
     // REF https://programmingwithmosh.com/react-native/make-api-calls-in-react-native-using-fetch/
     async function getExpenses(label) {
         setExpenses(null);
         setMessage("");
 
         let token = await SecureStorage.getItemAsync(Constants.STORAGE_KEY);
-        if(token === null){
+        if (token === null) {
             setMessage("Please login to use the system!");
             return;
         }
@@ -26,7 +29,7 @@ export default function listExpenses() {
         headers.append("Content-Type", "application/json");
         headers.append("Authorization", JSON.parse(token));
 
-        await fetch(Constants.SERVER_URL + label, {
+        await fetch(Variables.SERVER_URL + label, {
             method: 'GET',
             headers: headers,
         })
@@ -49,7 +52,7 @@ export default function listExpenses() {
     function removeExpensePressed(label, expense) {
         Alert.alert(
             'Remove Expense',
-            'Are you sure you whant to remove the expense below permanently \nId: ' + expense.id + '\nUsername: ' + expense.username + '\nValue: ' + expense.value,
+            'Are you sure you whant to remove the expense below permanently \nId: ' + expense.id + '\nUsername: ' + expense.username + '\nDescription: ' + expense.description + '\nValue: ' + expense.value,
             [
                 { text: 'NO' },
                 { text: 'YES', onPress: () => removeExpense(label, expense.id), style: 'cancel' }
@@ -65,7 +68,7 @@ export default function listExpenses() {
         headers.append("Content-Type", "application/json");
         headers.append("Authorization", JSON.parse(token));
 
-        await fetch(Constants.SERVER_URL + label + "/remove?expenseId=" + expenseId, {
+        await fetch(Variables.SERVER_URL + label + "/remove?expenseId=" + expenseId, {
             method: 'DELETE',
             headers: headers,
         })
@@ -93,19 +96,38 @@ export default function listExpenses() {
                 <Text style={styles.title}>List Expenses</Text>
             </View>
             <View style={styles.content}>
+                <Text>Label</Text>
                 <TextInput style={styles.textInput} onChangeText={onChangeText} value={text}></TextInput>
+                <Text></Text>
                 <Button onPress={() => getExpenses(text)} title="List Expenses" />
                 {expenses === null ?
                     <Text>No result found!</Text>
                     :
-                    (<FlatList data={expenses} keyExtractor={({ id }, index) => id.toString()} renderItem={({ item }) => (
-                        <View>
-                            <Text>{item.username + '. ' + item.value.toString()}</Text>
-                            <Button onPress={() => removeExpensePressed(text, item)} title="Remove Expense"></Button>
-                        </View>
-                    )} />)
+                    (<View>
+                        <ScrollView keyboardShouldPersistTaps='always'>
+                            <View style={styles.listItem}>
+                                <FlatList data={expenses} keyExtractor={({ id }, index) => id.toString()} renderItem={({ item }) => (
+                                    <View style={styles.itemRow}>
+                                        <View style={{ width: '80%' }}>
+                                            <Text>Username: {item.username}</Text>
+                                            <Text>Description: {item.description}</Text>
+                                            <Text>Value: {item.value.toString()}</Text>
+                                        </View>
+                                        <TouchableOpacity
+                                            style={styles.button}
+                                            onPress={() => removeExpensePressed(text, item)}>
+                                            <MaterialIcons
+                                                name="delete"
+                                                style={styles.icon}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
+                                )} />
+                            </View>
+                        </ScrollView>
+                    </View>)
                 }
-                <Text style={styles.text}>{message}</Text>
+                <Text style={styles.message}>{message}</Text>
             </View>
         </View >
     );

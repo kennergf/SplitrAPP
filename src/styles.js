@@ -15,8 +15,8 @@ export default StyleSheet.create({
     textInput: {
         borderWidth: 1,
         alignContent: 'center',
-        padding:3,
-        borderRadius:5,
+        padding: 3,
+        borderRadius: 5,
     },
     title: {
         fontSize: 20,
@@ -24,7 +24,7 @@ export default StyleSheet.create({
     },
     message: {
         textAlign: 'center',
-        marginVertical:10
+        marginVertical: 10
     },
     listItem: {
         margin: 10,
@@ -34,7 +34,7 @@ export default StyleSheet.create({
         alignSelf: "center",
         borderRadius: 5,
     },
-    item:{
+    item: {
         padding: 5,
         borderColor: 'black',
         borderWidth: 1,
@@ -42,10 +42,24 @@ export default StyleSheet.create({
         alignSelf: "center",
         borderRadius: 5,
     },
-    button:{
-        //borderRadius:5,
+    itemRow: {
+        flexDirection: 'row',
+        padding: 5,
+        borderColor: 'black',
+        borderWidth: 1,
+        width: "100%",
+        alignSelf: "center",
+        borderRadius: 5,
     },
-    smallButton:{
-        height:50,width:50
+    button: {
+        height: 50,
+        width: '20%',
+        justifyContent: "center",
+        alignContent: 'flex-end',
+        alignItems: "flex-end",
+        flexDirection: "row",
+    },
+    icon: {
+        fontSize: 25,
     }
 });
