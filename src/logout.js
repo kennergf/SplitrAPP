@@ -8,12 +8,14 @@ import styles from './styles';
 export default function Logout() {
     const [message, setMessage] = useState(null);
 
+    // Remove JWT
     async function logout() {
         setMessage("Loging out!");
         SecureStorage.deleteItemAsync(Constants.STORAGE_KEY);
         setMessage("Thank you for use our service!")
     }
 
+    // Render View
     return (
         <View style={styles.container}>
             <View style={styles.view}>

@@ -11,6 +11,7 @@ export default function closeTrip() {
     const [tripClosed, setTripClosed] = useState("null");
     const [message, setMessage] = useState(null);
 
+    // Make the web API request
     async function closeTrip(label) {
         setTripClosed("null");
         setMessage("");
@@ -45,6 +46,7 @@ export default function closeTrip() {
             });
     }
 
+    // Render View
     return (
         <View style={styles.container}>
             <View style={styles.view}>

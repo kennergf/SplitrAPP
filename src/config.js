@@ -12,12 +12,14 @@ export default function Config() {
         onChangeURL(Variables.SERVER_URL);
     }, []);
 
+    // Change the Web API config
     async function setServerURL(url) {
         setMessage("");
         Variables.SERVER_URL = url;
         setMessage("Server URL changed to " + Variables.SERVER_URL);
     }
 
+    // Render View
     return (
         <View style={styles.container}>
             <View style={styles.view}>

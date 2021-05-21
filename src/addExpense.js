@@ -12,6 +12,7 @@ export default function summary() {
     const [value, onChangeValue] = useState("");
     const [message, setMessage] = useState(null);
 
+    // Make the web API request
     async function addExpense(data) {
         setMessage("Adding expense!");
 
@@ -47,6 +48,7 @@ export default function summary() {
             });
     }
 
+    // Render View
     return (
         <View style={styles.container}>
             <View style={styles.view}>

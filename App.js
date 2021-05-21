@@ -21,6 +21,7 @@ import Config from './src/config';
 const Drawer = createDrawerNavigator();
 
 export default function App() {
+  // Render Menu
   return (
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Login">

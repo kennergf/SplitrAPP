@@ -12,6 +12,7 @@ export default function listExpenses() {
     const [expenses, setExpenses] = useState([]);
     const [message, setMessage] = useState(null);
 
+    // Make the web API request
     // REF https://rapidapi.com/blog/how-to-make-rest-api-calls-in-react-native/
     // REF https://programmingwithmosh.com/react-native/make-api-calls-in-react-native-using-fetch/
     async function getExpenses(label) {
@@ -48,6 +49,7 @@ export default function listExpenses() {
             });
     }
 
+    // Show Alert to confirm
     // REF https://medium.com/react-native-zone/english-react-native-beginner-alert-confirm-box-957a13e4157b
     function removeExpensePressed(label, expense) {
         Alert.alert(
@@ -60,6 +62,7 @@ export default function listExpenses() {
         );
     }
 
+    // Remove Expense permanently
     async function removeExpense(label, expenseId) {
         let token = await SecureStorage.getItemAsync(Constants.STORAGE_KEY);
         token = token.replace("Splitr ", "");
@@ -90,6 +93,7 @@ export default function listExpenses() {
             });
     }
 
+    // Render View
     return (
         <View style={styles.container}>
             <View style={styles.view}>

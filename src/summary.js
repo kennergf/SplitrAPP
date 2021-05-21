@@ -11,6 +11,7 @@ export default function summary() {
     const [summary, setSummary] = useState(null);
     const [message, setMessage] = useState(null);
 
+    // Make the web API request
     async function getSummary(label) {
         setSummary(null);
         setMessage("");
@@ -45,6 +46,7 @@ export default function summary() {
             });
     }
 
+    // Render View
     return (
         <View style={styles.container}>
             <View style={styles.view}>

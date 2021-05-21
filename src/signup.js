@@ -11,6 +11,7 @@ export default function Signup() {
     const [password, onChangePassword] = useState("");
     const [message, setMessage] = useState(null);
 
+    // Make the web API request
     async function signup(data) {
         setMessage("");
 
@@ -39,6 +40,7 @@ export default function Signup() {
             });
     }
 
+    // Render View
     return (
         <View style={styles.container}>
             <View style={styles.view}>

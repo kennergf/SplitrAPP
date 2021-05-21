@@ -12,6 +12,7 @@ export default function Login() {
     const [password, onChangePassword] = useState("");
     const [message, setMessage] = useState(null);
 
+    // Make the web API request
     async function login(data) {
         setMessage("");
 
@@ -46,6 +47,7 @@ export default function Login() {
             });
     }
 
+    // Render View
     return (
         <View style={styles.container}>
             <View style={styles.view}>
