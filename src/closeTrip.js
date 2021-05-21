@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, Button, FlatList, TextInput } from 'react-native';
 import * as SecureStorage from 'expo-secure-store';
 
+import * as Variables from './variables';
 import * as Constants from './constants';
 import styles from './styles';
 
@@ -50,7 +51,9 @@ export default function closeTrip() {
                 <Text style={styles.title}>Close Trip</Text>
             </View>
             <View style={styles.content}>
+                <Text>Label</Text>
                 <TextInput style={styles.textInput} onChangeText={onChangeText} value={text}></TextInput>
+                <Text></Text>
                 <Button onPress={() => closeTrip(text)} title="Close Trip" />
 
                 {tripClosed === null ?
@@ -61,7 +64,7 @@ export default function closeTrip() {
                         <Text>{tripClosed.status}</Text>
                     </View>)
                 }
-                <Text style={styles.text}>{message}</Text>
+                <Text style={styles.message}>{message}</Text>
             </View>
         </View>
     );

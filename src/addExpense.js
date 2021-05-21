@@ -2,11 +2,13 @@ import React, { useState, setState } from 'react';
 import { Text, View, Button, FlatList, TextInput } from 'react-native';
 import * as SecureStorage from 'expo-secure-store';
 
+import * as Variables from './variables';
 import * as Constants from './constants';
 import styles from './styles';
 
 export default function summary() {
-    const [label, onChangeLabel] = useState("Label");
+    const [label, onChangeLabel] = useState("");
+    const [description, onChangeDescription] = useState("");
     const [value, onChangeValue] = useState("");
     const [message, setMessage] = useState(null);
 
@@ -14,7 +16,7 @@ export default function summary() {
         setMessage("Adding expense!");
 
         let token = await SecureStorage.getItemAsync(Constants.STORAGE_KEY);
-        if(token === null){
+        if (token === null) {
             setMessage("Please login to use the system!");
             return;
         }
@@ -51,10 +53,15 @@ export default function summary() {
                 <Text style={styles.title}>Add Expenses</Text>
             </View>
             <View style={styles.content}>
+                <Text>Label</Text>
                 <TextInput style={styles.textInput} onChangeText={onChangeLabel} value={label}></TextInput>
+                <Text>Description</Text>
+                <TextInput style={styles.textInput} onChangeText={onChangeDescription} value={description}></TextInput>
+                <Text>Value</Text>
                 <TextInput style={styles.textInput} onChangeText={onChangeValue} value={value} keyboardType="numeric"></TextInput>
-                <Button onPress={() => addExpense({ 'value': value })} title="Submit" />
-                <Text style={styles.text}>{message}</Text>
+                <Text></Text>
+                <Button onPress={() => addExpense({ 'description': description, 'value': value })} title="Submit" />
+                <Text style={styles.message}>{message}</Text>
             </View>
         </View>
     );

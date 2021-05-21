@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Text, View, Button, FlatList, TextInput, ScrollView } from 'react-native';
 import * as SecureStorage from 'expo-secure-store';
 
+import * as Variables from './variables';
 import * as Constants from './constants';
 import styles from './styles';
 
 export default function summary() {
-    const [text, onChangeText] = useState("Label");
+    const [text, onChangeText] = useState("");
     const [summary, setSummary] = useState(null);
     const [message, setMessage] = useState(null);
 
@@ -50,7 +51,9 @@ export default function summary() {
                 <Text style={styles.title}>Summary</Text>
             </View>
             <View style={styles.content}>
+                <Text>Label</Text>
                 <TextInput style={styles.textInput} onChangeText={onChangeText} value={text}></TextInput>
+                <Text></Text>
                 <Button onPress={() => getSummary(text)} title="Show Summary" />
 
                 {summary === null ?
@@ -91,7 +94,7 @@ export default function summary() {
                         </ScrollView>
                     </View>)
                 }
-                <Text style={styles.text}>{message}</Text>
+                <Text style={styles.message}>{message}</Text>
             </View>
         </View>
     );

@@ -21,7 +21,7 @@ export default function Logout() {
             </View>
             <View style={styles.content}>
                 <Button onPress={() => logout()} title="Logout" />
-                <Text style={styles.text}>{message}</Text>
+                <Text style={styles.message}>{message}</Text>
             </View>
         </View>
     )

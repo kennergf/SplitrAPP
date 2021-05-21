@@ -21,13 +21,14 @@ export default function Config() {
     return (
         <View style={styles.container}>
             <View style={styles.view}>
-                <Text style={styles.title}>Logout</Text>
+                <Text style={styles.title}>Configuration</Text>
             </View>
             <View style={styles.content}>
+                <Text>Server URL</Text>
                 <TextInput style={styles.textInput} onChangeText={onChangeURL} value={url} ></TextInput>
-
+                <Text></Text>
                 <Button onPress={() => setServerURL(url)} title="Save Server URL" />
-                <Text style={styles.text}>{message}</Text>
+                <Text style={styles.message}>{message}</Text>
             </View>
         </View>
     )

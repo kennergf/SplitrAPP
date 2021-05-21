@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Text, View, Button, TextInput } from 'react-native';
 import * as SecureStorage from 'expo-secure-store';
 
+import * as Variables from './variables';
 import * as Constants from './constants';
 import styles from './styles';
 
@@ -51,10 +52,13 @@ export default function Login() {
                 <Text style={styles.title}>Login</Text>
             </View>
             <View style={styles.content}>
+                <Text>Username</Text>
                 <TextInput style={styles.textInput} onChangeText={onChangeUsername} value={username}></TextInput>
+                <Text>Password</Text>
                 <TextInput style={styles.textInput} onChangeText={onChangePassword} value={password} keyboardType="visible-password"></TextInput>
+                <Text></Text>
                 <Button onPress={() => login({ "username": username, "password": password })} title="Login" />
-                <Text style={styles.text}>{message}</Text>
+                <Text style={styles.message}>{message}</Text>
             </View>
         </View>
     );
